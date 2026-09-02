@@ -19,7 +19,7 @@ Merchants require an adaptive engine that:
 ## 🏗 System Architecture
 
                   
-                  ┌────────────────────────┐
+                   ┌────────────────────────┐
                    │ Failed Payment Webhook │
                    └───────────┬────────────┘
                                │
@@ -35,7 +35,7 @@ Merchants require an adaptive engine that:
   │   (Structured Output) │         │    Fallback Engine    │
   └───────────┬───────────┘         └───────────┬───────────┘
               │                                 │
-              │ (On API Timeout / Exception)     │
+              │ (On API Timeout / Exception)     
               └────────────────┬────────────────┘
                                │
                                ▼
