@@ -30,12 +30,12 @@ Merchants require an adaptive engine that:
                                │
               ┌────────────────┴────────────────┐
               ▼                                 ▼
-  ┌───────────────────────┐         ┌───────────────────────┐
-  │   LLM Decision Engine │         │  Deterministic Safety │
-  │   (Structured Output) │         │    Fallback Engine    │
-  └───────────┬───────────┘         └───────────┬───────────┘
+           
+     LLM Decision Engine            Deterministic Safety 
+    (Structured Output)            Fallback Engine    
+           
               │                                 │
-              │ (On API Timeout / Exception)     
+              │ (On API Timeout / Exception)    | 
               └────────────────┬────────────────┘
                                │
                                ▼
