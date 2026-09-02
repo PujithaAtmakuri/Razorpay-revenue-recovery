@@ -1,0 +1,28 @@
+[
+    {
+        "event": "payment.failed",
+        "payment_id": "pay_P102938475",
+        "amount": 499900,
+        "currency": "INR",
+        "customer_name": "Pujitha Atmakuri",
+        "customer_email": "pujitha@example.com",
+        "customer_phone": "+919876543210",
+        "method": "upi",
+        "error_code": "BAD_REQUEST_INSUFFICIENT_FUNDS",
+        "error_description": "UPI transaction declined due to insufficient balance in linked account",
+        "gateway": "NPCI_UPI"
+    },
+    {
+        "event": "payment.failed",
+        "payment_id": "pay_P987654321",
+        "amount": 1250000,
+        "currency": "INR",
+        "customer_name": "Rahul Sharma",
+        "customer_email": "rahul@example.com",
+        "customer_phone": "+919123456789",
+        "method": "card",
+        "error_code": "GATEWAY_TIMEOUT",
+        "error_description": "Issuer bank network failed to respond within timeout window",
+        "gateway": "HDFC_CREDIT"
+    }
+]
