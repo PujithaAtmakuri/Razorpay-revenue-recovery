@@ -18,35 +18,34 @@ Merchants require an adaptive engine that:
 
 ## 🏗 System Architecture
 
-                  
-                   ┌────────────────────────┐
-                   │ Failed Payment Webhook │
-                   └───────────┬────────────┘
-                               │
-                               ▼
-                   ┌────────────────────────┐
-                   │  FastAPI Ingestion Hub │
-                   └───────────┬────────────┘
-                               │
-              ┌────────────────┴────────────────┐
-              ▼                                 ▼
-           
-     LLM Decision Engine            Deterministic Safety 
-    (Structured Output)            Fallback Engine    
-           
-              │                                 │
-              │ (On API Timeout / Exception)    | 
-              └────────────────┬────────────────┘
-                               │
-                               ▼
-                   ┌────────────────────────┐
-                   │ Structured Plan Output │
-                   │ ├─ Failure Category    │
-                   │ ├─ Retry Schedule      │
-                   │ ├─ Optimal Channel     │
-                   │ └─ Personalized Nudge  │
-                   └────────────────────────┘
 
+                       ┌────────────────────────┐
+                       │ Failed Payment Webhook │
+                       └───────────┬────────────┘
+                                   │
+                                   ▼
+                       ┌────────────────────────┐
+                       │  FastAPI Ingestion Hub │
+                       └───────────┬────────────┘
+                                   │
+                  ┌────────────────┴────────────────┐
+                  ▼                                 ▼
+      ┌───────────────────────┐         ┌───────────────────────┐
+      │   LLM Decision Engine │         │  Deterministic Safety │
+      │   (Structured Output) │         │    Fallback Engine    │
+      └───────────┬───────────┘         └───────────┬───────────┘
+                  │                                 │
+                  │ (On API Timeout / Exception)     │
+                  └────────────────┬────────────────┘
+                                   │
+                                   ▼
+                       ┌────────────────────────┐
+                       │ Structured Plan Output │
+                       │ ├─ Failure Category    │
+                       │ ├─ Retry Schedule      │
+                       │ ├─ Optimal Channel     │
+                       │ └─ Personalized Nudge  │
+                       └────────────────────────┘
 ---
 
 ## Key Features & Evaluator Metrics
@@ -70,13 +69,45 @@ Merchants require an adaptive engine that:
 
 ## 📂 Project Structure
 
-```text
 razorpay-revenue-recovery/
 ├── main.py                  # FastAPI server & route handlers
 ├── recovery_agent.py        # Core AI engine & deterministic fallback logic
 ├── requirements.txt         # Project dependencies
 ├── mock_webhooks.json       # Sample test payloads for evaluation
 └── README.md                # System documentation
+⚡ Key Features & Evaluator Metrics
+Autonomous Categorization: Automatically routes failures into Technical, Financial, Security, or Network buckets.
+
+Deterministic Fallback Engine (Resilience Metric): If the LLM API times out, fails, or receives malformed data, the engine seamlessly switches to rule-based fallback decision trees to guarantee high availability.
+
+Smart Retry & Multi-Channel Nudging: Calculates dynamic retry delays (e.g., 48 hours for balance issues vs. 1 hour for network timeouts) and generates personalized recovery messages with direct links.
+
+Bounded Escalation & Compliance (Stopping Rules): Enforces strict retry limits (maximum 3 retry attempts) and immediately halts automated nudges for high-risk/security flags to maintain policy compliance.
+
+Batch Analytics & Audit Trail: Maintains structured, timestamped tracking records for every recovery attempt to aggregate net INR recovered across batch processing cycles.
+
+Pydantic Data Validation: Ensures strict typing and structured JSON responses with zero schema drift.
+
+🛠 Tech Stack
+Language: Python 3.10+
+
+Framework: FastAPI
+
+Data Validation: Pydantic v2
+
+LLM Engine: OpenAI GPT-4o-mini (Structured Outputs)
+
+Server: Uvicorn
+
+📂 Project Structure
+Plaintext
+Razorpay-revenue-recovery/
+├── main.py                  # FastAPI server & route handlers
+├── recovery_agent.py        # Core AI engine & deterministic fallback logic
+├── requirements.txt         # Project dependencies
+├── mock_webhooks.json       # Sample test payloads for evaluation
+└── README.md                # System documentation
+
 
 🚀 Quickstart Guide
 1. Prerequisites
@@ -89,17 +120,14 @@ cd Razorpay-revenue-recovery
 py -m pip install -r requirements.txt
 
 3. Run the API Server
-Bash
+
 py main.py
-The server will start at http://127.0.0.1:8000.
 
 🧪 Testing the API
 Interactive API Documentation (Swagger UI)
-Navigate to http://127.0.0.1:8000/docs in your web browser.
-
-Expand the POST /api/v1/recover-payment endpoint.
-
-Click Try it out, paste the following payload, and click Execute:
+1.Navigate to http://127.0.0.1:8000/docs in your web browser.
+2.Expand the POST /api/v1/recover-payment endpoint.
+3.Click Try it out, paste the following payload, and click Execute:
 
 JSON
 {
